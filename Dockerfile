@@ -10,7 +10,7 @@ RUN mkdir /devops
 WORKDIR /devops
 
 # Install Flask
-RUN pip install Flask
+RUN pip install Flask psycopg2-binary Flask-SQLAlchemy
 
 # Copy the project files into the container
 COPY . /devops/
