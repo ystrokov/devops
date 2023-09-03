@@ -1,31 +1,24 @@
 version: '3'
-
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: task-manager
-    container_name: flask
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/devops
+    image: python:3.9  # Используем официальный образ Python
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
-    command: ["python", "app.py"]
+    working_dir: /devops
+    command: python app.py  # Команда для запуска приложения
+    ports:
+      - "5000:5000"  # Проксирование порта из контейнера на хост
+    volumes:
+      - .:/devops  # Монтируем текущий каталог в контейнер
   backend-2:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: task-manager
-    container_name: flask
-    ports:
-      - "5001:5000"
-    volumes:
-      - .:/devops
+    image: python:3.9  # Используем официальный образ Python
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
-    command: ["python", "app.py"]
+    working_dir: /devops
+    command: python app.py  # Команда для запуска приложения
+    ports:
+      - "5000:5000"  # Проксирование порта из контейнера на хост
+    volumes:
+      - .:/devops  # Монтируем текущий каталог в контейнер
