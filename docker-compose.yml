@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: task-manager
+    container_name: flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/devops
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    command: ["python", "app.py"]
+  backend-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: task-manager
+    container_name: flask
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/devops
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    command: ["python", "app.py"]
