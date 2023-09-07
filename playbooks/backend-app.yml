@@ -1,0 +1,44 @@
+---
+- name: Обновить систему ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Обновить пакеты
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
+---
+- name: Установить и настроить nginx
+  hosts: nginx
+  become: yes
+
+  tasks:
+    - name: Установить Nginx
+      apt:
+      name: nginx
+      state: present
+
+    - name: Запустить nginx и добавить в автозагрузку
+      apt:
+      name: nginx
+      state: started
+      enabled: yes
+
+    - name: Скопировать конфигурацию
+      copy:
+        src: /devops/nginx/default
+        dest: /etc/nginx/sites-available
+
+    - name: Скопировать конфигурацию
+      copy:
+        src: /devops/nginx/nginx.conf
+        dest: /etc/nginx/
+      notify:
+        - Reload Nginx
+
+  notify:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
