@@ -6,9 +6,23 @@ services:
       - "5000:5000"
     deploy:
       mode: global
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./backend-logs:/app/logs
   myapp:
     image: task-manager-flask
     ports:
       - "5001:5000"
     deploy:
       mode: global
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./myapp-logs:/app/logs
